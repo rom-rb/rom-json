@@ -1,0 +1,22 @@
+language: ruby
+bundler_args: --without tools
+env:
+  - CODECLIMATE_REPO_TOKEN=ef69eb6a9e19987527e5010a02bbf71cd4ddc8a5137ba308f299817f56d06e7f
+script: "bundle exec rake spec"
+rvm:
+  - 2.0
+  - 2.1
+  - 2.2
+  - rbx-2
+  - jruby
+  - ruby-head
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/39e1225f489f38b0bd09
+    on_success: change
+    on_failure: always
+    on_start: false
