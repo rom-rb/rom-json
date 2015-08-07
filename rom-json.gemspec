@@ -1,14 +1,14 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rom/yaml/version'
+require 'rom/json/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'rom-yaml'
-  spec.version       = ROM::YAML::VERSION.dup
-  spec.authors       = ['Piotr Solnica']
+  spec.name          = 'rom-json'
+  spec.version       = ROM::JSON::VERSION.dup
+  spec.authors       = ['Piotr Solnica', "Rolf Bjaanes"]
   spec.email         = ['piotr.solnica@gmail.com']
-  spec.summary       = 'YAML support for Ruby Object Mapper'
+  spec.summary       = 'JSON support for Ruby Object Mapper'
   spec.description   = spec.summary
   spec.homepage      = 'http://rom-rb.org'
   spec.license       = 'MIT'

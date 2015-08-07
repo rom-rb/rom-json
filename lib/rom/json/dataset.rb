@@ -1,8 +1,8 @@
 require 'rom/memory/dataset'
 
 module ROM
-  module YAML
-    # YAML in-memory dataset used by YAML gateways
+  module JSON
+    # JSON in-memory dataset used by JSON gateways
     #
     # @api public
     class Dataset < ROM::Memory::Dataset

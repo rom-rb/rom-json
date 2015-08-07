@@ -2,13 +2,13 @@ require 'spec_helper'
 
 require 'rom/lint/spec'
 
-describe 'YAML adapter' do
+describe 'JSON adapter' do
   subject(:rom) { setup.finalize }
 
   let(:root) { Pathname(__FILE__).dirname.join('..') }
 
-  let(:path) { "#{root}/fixtures/test_db.yml" }
-  let(:setup) { ROM.setup(:yaml, path) }
+  let(:path) { "#{root}/fixtures/test_db.json" }
+  let(:setup) { ROM.setup(:json, path) }
 
   before do
     setup.relation(:users) do
@@ -48,7 +48,7 @@ describe 'YAML adapter' do
 
   describe 'multi-file setup' do
     it 'uses one-file-per-relation' do
-      setup = ROM.setup(:yaml, "#{root}/fixtures/db")
+      setup = ROM.setup(:json, "#{root}/fixtures/db")
 
       setup.relation(:users)
       setup.relation(:tasks)

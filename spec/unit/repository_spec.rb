@@ -2,12 +2,12 @@ require 'spec_helper'
 
 require 'rom/lint/spec'
 
-describe ROM::YAML::Gateway do
+describe ROM::JSON::Gateway do
   let(:root) { Pathname(__FILE__).dirname.join('..') }
 
   it_behaves_like 'a rom gateway' do
-    let(:identifier) { :yaml }
-    let(:gateway) { ROM::YAML::Gateway }
-    let(:uri) { "#{root}/fixtures/test_db.yml" }
+    let(:identifier) { :json }
+    let(:gateway) { ROM::JSON::Gateway }
+    let(:uri) { "#{root}/fixtures/test_db.json" }
   end
 end

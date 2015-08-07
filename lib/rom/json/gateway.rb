@@ -1,23 +1,23 @@
-require 'yaml'
+require 'json'
 
 require 'rom/gateway'
-require 'rom/yaml/dataset'
+require 'rom/json/dataset'
 
 module ROM
-  module YAML
-    # YAML gateway
+  module JSON
+    # JSON gateway
     #
-    # Connects to a yaml file and uses it as a data-source
+    # Connects to a json file and uses it as a data-source
     #
     # @example
-    #   ROM.setup(:yaml, '/path/to/data.yml')
+    #   ROM.setup(:json, '/path/to/data.yml')
     #
     #   rom = ROM.finalize.env
     #
     #   gateway = rom.gateways[:default]
     #
     #   gateway.dataset?(:users) # => true
-    #   gateway[:users] # => data under 'users' key from the yaml file
+    #   gateway[:users] # => data under 'users' key from the json file
     #
     # @api public
     class Gateway < ROM::Gateway
@@ -26,17 +26,17 @@ module ROM
       # @api private
       attr_reader :sources
 
-      # @attr_reader [Hash] datasets YAML datasets from sources
+      # @attr_reader [Hash] datasets JSON datasets from sources
       #
       # @api private
       attr_reader :datasets
 
-      # Create a new yaml gateway from a path to file(s)
+      # Create a new json gateway from a path to file(s)
       #
       # @example
-      #   gateway = ROM::YAML::Gateway.new('/path/to/files')
+      #   gateway = ROM::JSON::Gateway.new('/path/to/files')
       #
-      # @param [String, Pathname] path The path to your YAML file(s)
+      # @param [String, Pathname] path The path to your JSON file(s)
       #
       # @return [Gateway]
       #
@@ -45,7 +45,7 @@ module ROM
         super(load_from(path))
       end
 
-      # Load data from yaml file(s)
+      # Load data from json file(s)
       #
       # @api private
       def self.load_from(path)
@@ -56,24 +56,24 @@ module ROM
         end
       end
 
-      # Load yaml files from a given directory and return a name => data map
+      # Load json files from a given directory and return a name => data map
       #
       # @api private
       def self.load_files(path)
-        Dir["#{path}/*.yml"].each_with_object({}) do |file, h|
+        Dir["#{path}/*.js"].each_with_object({}) do |file, h|
           name = File.basename(file, '.*')
           h[name] = load_file(file).fetch(name)
         end
       end
 
-      # Load yaml file
+      # Load json file
       #
       # @api private
       def self.load_file(path)
-        ::YAML.load_file(path)
+        ::JSON.parse(File.read(path))
       end
 
-      # @param [String] path The absolute path to yaml file
+      # @param [String] path The absolute path to json file
       #
       # @api private
       def initialize(sources)

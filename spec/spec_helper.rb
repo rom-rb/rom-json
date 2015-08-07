@@ -5,7 +5,7 @@ if RUBY_ENGINE == 'rbx'
   CodeClimate::TestReporter.start
 end
 
-require 'rom-yaml'
+require 'rom-json'
 
 begin
   require 'byebug'

@@ -1,26 +1,26 @@
-[gem]: https://rubygems.org/gems/rom-yaml
-[travis]: https://travis-ci.org/rom-rb/rom-yaml
-[gemnasium]: https://gemnasium.com/rom-rb/rom-yaml
-[codeclimate]: https://codeclimate.com/github/rom-rb/rom-yaml
-[inchpages]: http://inch-ci.org/github/rom-rb/rom-yaml
+[gem]: https://rubygems.org/gems/rom-json
+[travis]: https://travis-ci.org/rom-rb/rom-json
+[gemnasium]: https://gemnasium.com/rom-rb/rom-json
+[codeclimate]: https://codeclimate.com/github/rom-rb/rom-json
+[inchpages]: http://inch-ci.org/github/rom-rb/rom-json
 
-# ROM::YAML
+# ROM::JSON
 
-[![Gem Version](https://badge.fury.io/rb/rom-yaml.svg)][gem]
-[![Build Status](https://travis-ci.org/rom-rb/rom-yaml.svg?branch=master)][travis]
-[![Dependency Status](https://gemnasium.com/rom-rb/rom-yaml.png)][gemnasium]
-[![Code Climate](https://codeclimate.com/github/rom-rb/rom-yaml/badges/gpa.svg)][codeclimate]
-[![Test Coverage](https://codeclimate.com/github/rom-rb/rom-yaml/badges/coverage.svg)][codeclimate]
-[![Inline docs](http://inch-ci.org/github/rom-rb/rom-yaml.svg?branch=master)][inchpages]
+[![Gem Version](https://badge.fury.io/rb/rom-json.svg)][gem]
+[![Build Status](https://travis-ci.org/rom-rb/rom-json.svg?branch=master)][travis]
+[![Dependency Status](https://gemnasium.com/rom-rb/rom-json.png)][gemnasium]
+[![Code Climate](https://codeclimate.com/github/rom-rb/rom-json/badges/gpa.svg)][codeclimate]
+[![Test Coverage](https://codeclimate.com/github/rom-rb/rom-json/badges/coverage.svg)][codeclimate]
+[![Inline docs](http://inch-ci.org/github/rom-rb/rom-json.svg?branch=master)][inchpages]
 
-YAML support for [Ruby Object Mapper](https://github.com/rom-rb/rom)
+JSON support for [Ruby Object Mapper](https://github.com/rom-rb/rom)
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rom-yaml'
+gem 'rom-json'
 ```
 
 And then execute:
@@ -29,7 +29,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install rom-yaml
+    $ gem install rom-json
 
 ## Usage
 
