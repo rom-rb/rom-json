@@ -60,7 +60,7 @@ module ROM
       #
       # @api private
       def self.load_files(path)
-        Dir["#{path}/*.js"].each_with_object({}) do |file, h|
+        Dir["#{path}/*.json"].each_with_object({}) do |file, h|
           name = File.basename(file, '.*')
           h[name] = load_file(file).fetch(name)
         end
