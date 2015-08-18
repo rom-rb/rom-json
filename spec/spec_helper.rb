@@ -6,6 +6,7 @@ if RUBY_ENGINE == 'rbx'
 end
 
 require 'rom-json'
+ROM.use :auto_registration
 
 begin
   require 'byebug'
