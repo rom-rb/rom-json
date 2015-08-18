@@ -7,6 +7,8 @@ module ROM
     # @api private
     class Relation < ROM::Relation
       forward :join, :project, :restrict, :order
+
+      adapter :json
     end
   end
 end
