@@ -10,7 +10,7 @@ module ROM
     # Connects to a json file and uses it as a data-source
     #
     # @example
-    #   ROM.setup(:json, '/path/to/data.yml')
+    #   ROM.setup(:json, '/path/to/data.json')
     #
     #   rom = ROM.finalize.env
     #
