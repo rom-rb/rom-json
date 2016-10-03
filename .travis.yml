@@ -4,15 +4,17 @@ env:
   - CODECLIMATE_REPO_TOKEN=ef69eb6a9e19987527e5010a02bbf71cd4ddc8a5137ba308f299817f56d06e7f
 script: "bundle exec rake spec"
 rvm:
-  - 2.0
-  - 2.1
-  - 2.2
-  - rbx-2
-  - jruby
+  - 2.1.9
+  - 2.2.5
+  - 2.3.1
+  - ruby-2.4.0-preview2
+  - rbx
+  - jruby-9.1.5.0
   - ruby-head
 matrix:
   allow_failures:
     - rvm: ruby-head
+    - rvm: rbx
 notifications:
   webhooks:
     urls:
