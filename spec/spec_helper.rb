@@ -1,12 +1,14 @@
 # encoding: utf-8
 
+require 'bundler'
+Bundler.setup
+
+require 'rom-json'
+
 if RUBY_ENGINE == 'rbx'
   require "codeclimate-test-reporter"
   CodeClimate::TestReporter.start
 end
-
-require 'rom-json'
-ROM.use :auto_registration
 
 begin
   require 'byebug'

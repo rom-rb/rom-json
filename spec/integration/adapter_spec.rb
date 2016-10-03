@@ -3,15 +3,13 @@ require 'spec_helper'
 require 'rom/lint/spec'
 
 describe 'JSON adapter' do
-  subject(:rom) { setup.finalize }
 
   let(:root) { Pathname(__FILE__).dirname.join('..') }
-
   let(:path) { "#{root}/fixtures/test_db.json" }
-  let(:setup) { ROM.setup(:json, path) }
 
-  before do
-    setup.relation(:users) do
+  subject(:rom) do
+    ROM.container(:json, path) do |setup|
+      setup.relation(:users) do
       def by_name(name)
         restrict(name: name)
       end
@@ -31,6 +29,7 @@ describe 'JSON adapter' do
         end
       end
     end
+    end
   end
 
   describe 'env#relation' do
@@ -48,12 +47,10 @@ describe 'JSON adapter' do
 
   describe 'multi-file setup' do
     it 'uses one-file-per-relation' do
-      setup = ROM.setup(:json, "#{root}/fixtures/db")
-
-      setup.relation(:users)
-      setup.relation(:tasks)
-
-      rom = setup.finalize
+      rom = ROM.container(:json, "#{root}/fixtures/db") do |setup|
+        setup.relation(:users)
+        setup.relation(:tasks)
+      end
 
       expect(rom.relation(:users)).to match_array([
         { name: 'Jane', email: 'jane@doe.org' }
