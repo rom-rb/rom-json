@@ -12,7 +12,7 @@ end
 
 begin
   require 'byebug'
-rescue LoadError
+rescue LoadError # rubocop:disable Lint/HandleExceptions
 end
 
 root = Pathname(__FILE__).dirname
