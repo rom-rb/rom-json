@@ -10,17 +10,14 @@ module ROM
     # Connects to a json file and uses it as a data-source
     #
     # @example
-    #   ROM.setup(:json, '/path/to/data.json')
-    #
-    #   rom = ROM.finalize.env
-    #
+    #   rom = ROM.container(:json, '/path/to/data.yml')
     #   gateway = rom.gateways[:default]
-    #
-    #   gateway.dataset?(:users) # => true
     #   gateway[:users] # => data under 'users' key from the json file
     #
     # @api public
     class Gateway < ROM::Gateway
+      adapter :json
+
       # @attr_reader [Hash] sources Data loaded from files
       #
       # @api private

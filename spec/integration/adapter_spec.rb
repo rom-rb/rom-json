@@ -2,61 +2,76 @@ require 'spec_helper'
 
 require 'rom/lint/spec'
 
-describe 'JSON adapter' do
-
+describe ROM::JSON do
+  let(:configuration) { ROM::Configuration.new(:json, path) }
   let(:root) { Pathname(__FILE__).dirname.join('..') }
-  let(:path) { "#{root}/fixtures/test_db.json" }
+  let(:container) { ROM.container(configuration) }
 
-  subject(:rom) do
-    ROM.container(:json, path) do |setup|
-      setup.relation(:users) do
-      def by_name(name)
-        restrict(name: name)
-      end
-    end
+  subject(:rom) { container }
 
-    setup.mappers do
-      define(:users) do
-        register_as :entity
+  context 'with single file' do
+    let(:path) { "#{root}/fixtures/test_db.json" }
 
-        model name: 'User'
+    let(:relation) do
+      Class.new(ROM::JSON::Relation) do
+        schema(:users) do
+          attribute :name, ROM::Types::String
+          attribute :email, ROM::Types::String
+          attribute :roles, ROM::Types::Array
+        end
 
-        attribute :name
-        attribute :email
+        auto_struct true
 
-        embedded :roles, type: :array do
-          attribute :name, from: 'role_name'
+        def by_name(name)
+          restrict(name: name)
         end
       end
     end
-    end
-  end
 
-  describe 'env#relation' do
-    it 'returns mapped object' do
-      jane = rom.relation(:users).as(:entity).by_name('Jane').first
+    before { configuration.register_relation(relation) }
 
-      expect(jane.name).to eql('Jane')
-      expect(jane.email).to eql('jane@doe.org')
-      expect(jane.roles.length).to eql(2)
-      expect(jane.roles).to eql([
-        { name: 'Member' }, { name: 'Admin' }
-      ])
-    end
-  end
+    describe 'Relation#first' do
+      it 'returns mapped struct' do
+        jane = rom.relations[:users].by_name('Jane').first
 
-  describe 'multi-file setup' do
-    it 'uses one-file-per-relation' do
-      rom = ROM.container(:json, "#{root}/fixtures/db") do |setup|
-        setup.relation(:users)
-        setup.relation(:tasks)
+        expect(jane.name).to eql('Jane')
+        expect(jane.email).to eql('jane@doe.org')
+        expect(jane.roles).
+          to eql([{ role_name: 'Member' }, { role_name: 'Admin' }])
       end
+    end
+  end
 
-      expect(rom.relation(:users)).to match_array([
-        { name: 'Jane', email: 'jane@doe.org' }
-      ])
+  context 'with muli-file setup' do
+    let(:path) { "#{root}/fixtures/db" }
 
-      expect(rom.relation(:tasks)).to match_array([
+    let(:users_relation) do
+      Class.new(ROM::JSON::Relation) do
+        schema(:users) do
+          attribute :name, ROM::Types::String
+          attribute :email, ROM::Types::String
+        end
+      end
+    end
+
+    let(:tasks_relation) do
+      Class.new(ROM::JSON::Relation) do
+        schema(:tasks) do
+          attribute :title, ROM::Types::String
+        end
+      end
+    end
+
+    before do
+      configuration.register_relation(users_relation)
+      configuration.register_relation(tasks_relation)
+    end
+
+    it 'uses one-file-per-relation' do
+      expect(rom.relations[:users]).
+        to match_array([{ name: 'Jane', email: 'jane@doe.org' }])
+
+      expect(rom.relations[:tasks]).to match_array([
         { title: 'Task One' },
         { title: 'Task Two' },
         { title: 'Task Three' }

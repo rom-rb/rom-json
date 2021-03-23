@@ -1,5 +1,4 @@
 require 'spec_helper'
-
 require 'rom/lint/spec'
 
 describe ROM::JSON::Dataset do
