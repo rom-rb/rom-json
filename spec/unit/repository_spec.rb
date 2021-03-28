@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-require 'rom/lint/spec'
+# frozen_string_literal: true
 
 describe ROM::JSON::Gateway do
   let(:root) { Pathname(__FILE__).dirname.join('..') }

@@ -1,16 +1,13 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 gemspec
 
 group :test do
-  gem 'byebug', platform: :mri
-  gem 'inflecto'
-  gem 'rom', git: 'https://github.com/rom-rb/rom.git', branch: 'master'
-  gem 'rspec', '~> 3.1'
   gem 'codeclimate-test-reporter', require: false
+  gem 'inflecto'
+  gem 'rom', '~> 5.0'
+  gem 'rspec', '~> 3.4'
   gem 'virtus'
-end
-
-group :tools do
-  gem 'rubocop'
 end

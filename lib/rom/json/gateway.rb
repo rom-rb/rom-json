@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 
 require 'rom/gateway'
@@ -74,6 +76,7 @@ module ROM
       #
       # @api private
       def initialize(sources)
+        super()
         @sources = sources
         @datasets = {}
       end

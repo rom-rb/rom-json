@@ -1,18 +1,16 @@
-require 'spec_helper'
-
-require 'rom/lint/spec'
+# frozen_string_literal: true
 
 describe ROM::JSON do
   let(:configuration) { ROM::Configuration.new(:json, path) }
   let(:root) { Pathname(__FILE__).dirname.join('..') }
   let(:container) { ROM.container(configuration) }
 
-  subject(:rom) { container }
+  subject(:relations) { ROM.container(configuration).relations }
 
   context 'with single file' do
     let(:path) { "#{root}/fixtures/test_db.json" }
 
-    let(:relation) do
+    let(:users_relation) do
       Class.new(ROM::JSON::Relation) do
         schema(:users) do
           attribute :name, ROM::Types::String
@@ -28,17 +26,15 @@ describe ROM::JSON do
       end
     end
 
-    before { configuration.register_relation(relation) }
+    before { configuration.register_relation(users_relation) }
 
-    describe 'Relation#first' do
-      it 'returns mapped struct' do
-        jane = rom.relations[:users].by_name('Jane').first
+    it 'returns mapped struct' do
+      jane = relations[:users].by_name('Jane').first
 
-        expect(jane.name).to eql('Jane')
-        expect(jane.email).to eql('jane@doe.org')
-        expect(jane.roles).
-          to eql([{ role_name: 'Member' }, { role_name: 'Admin' }])
-      end
+      expect(jane.name).to eql('Jane')
+      expect(jane.email).to eql('jane@doe.org')
+      expect(jane.roles).
+        to eql([{ role_name: 'Member' }, { role_name: 'Admin' }])
     end
   end
 
@@ -63,19 +59,23 @@ describe ROM::JSON do
     end
 
     before do
-      configuration.register_relation(users_relation)
-      configuration.register_relation(tasks_relation)
+      [users_relation, tasks_relation].
+        each { |relation| configuration.register_relation(relation) }
     end
 
-    it 'uses one-file-per-relation' do
-      expect(rom.relations[:users]).
+    it 'returns data from users.json file' do
+      expect(relations[:users]).
         to match_array([{ name: 'Jane', email: 'jane@doe.org' }])
+    end
 
-      expect(rom.relations[:tasks]).to match_array([
-        { title: 'Task One' },
-        { title: 'Task Two' },
-        { title: 'Task Three' }
-      ])
+    it 'returns data from tasks.json file' do
+      expect(relations[:tasks]).to match_array(
+        [
+          { title: 'Task One' },
+          { title: 'Task Two' },
+          { title: 'Task Three' }
+        ]
+      )
     end
   end
 end
