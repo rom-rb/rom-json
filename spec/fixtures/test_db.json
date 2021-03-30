@@ -11,6 +11,15 @@
           "role_name": "Admin"
         }
       ]
+    },
+    {
+      "name": "Another",
+      "email": "another@one.orb",
+      "roles": [
+        {
+          "role_name": "Member"
+        }
+      ]
     }
   ]
 }

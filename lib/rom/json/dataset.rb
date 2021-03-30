@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rom/memory/dataset'
 
 module ROM
@@ -10,8 +12,14 @@ module ROM
       #
       # @api private
       def self.row_proc
-        Transproc[:hash_recursion, Transproc[:symbolize_keys]]
+        Transforms[:deep_symbolize_keys]
       end
+    end
+
+    class Transforms
+      extend Transproc::Registry
+      import Transproc::HashTransformations
+      import Transproc::Recursion
     end
   end
 end
